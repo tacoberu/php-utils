@@ -52,6 +52,18 @@ class RightTest extends PHPUnit_Framework_TestCase
 	}
 
 
+	function testUnpack()
+	{
+		$m = new Right(42);
+		$this->assertEquals(42, Right::assert($m));
+	}
 
+
+	function testUnpackFail()
+	{
+		$this->setExpectedException('RuntimeException', "foo", 42);
+		$m = new Left('foo', 42);
+		$this->assertEquals(42, Right::assert($m));
+	}
 
 }

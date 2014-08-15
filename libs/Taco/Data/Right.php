@@ -15,6 +15,7 @@
 namespace Taco\Data;
 
 
+use RuntimeException;
 
 /**
  * The Either type represents values with two possibilities: a value of type
@@ -52,5 +53,13 @@ class Right implements Either
 	}
 
 
+
+	public static function assert(Either $either)
+	{
+		if ($either instanceof Right) {
+			return $either->getValue();
+		}
+		throw new RuntimeException($either->getMessage(), $either->getCode());
+	}
 
 }
