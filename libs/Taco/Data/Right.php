@@ -34,8 +34,7 @@ class Right implements Either
 	private $value;
 
 	/**
-	 * @param int id Databázový identifikátor.
-	 * @param string ident slug
+	 * @param mixin
 	 */
 	public function __construct($value)
 	{
