@@ -46,7 +46,6 @@ class TexyTextFormater implements Formater
 	 */
 	function setOptions(array $opts)
 	{
-		//	unsupported
 	}
 
 
