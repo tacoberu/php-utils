@@ -43,6 +43,7 @@ class DateTimeFormater implements Formater
 	}
 
 
+
 	/**
 	 * Konfigurace formáteru.
 	 * @param array

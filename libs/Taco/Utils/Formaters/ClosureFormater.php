@@ -37,14 +37,13 @@ class ClosureFormater implements Formater
 	}
 
 
+
 	/**
 	 * Konfigurace formáteru.
 	 * @param array
 	 */
 	function setOptions(array $opts)
 	{}
-
-
 
 
 
