@@ -29,6 +29,7 @@ use RuntimeException;
  */
 interface Maybe
 {
+	function ifJust($callback);
 }
 
 
@@ -56,6 +57,18 @@ class Just implements Maybe
 	}
 
 
+
+	function ifJust($callback)
+	{
+		$val = $callback($this->getValue());
+		if ($val instanceof Maybe) {
+			return $val;
+		}
+		throw new LogicExeption("ifJust callback must returning Maybe type.");
+	}
+
+
+
 	static function assert(Maybe $maybe)
 	{
 		if ($maybe instanceof Just) {
@@ -71,6 +84,14 @@ class Just implements Maybe
 
 class Nothing implements Maybe
 {
+
+
+	function ifJust($_)
+	{
+		return $this;
+	}
+
+
 
 	static function assert(Maybe $maybe)
 	{
