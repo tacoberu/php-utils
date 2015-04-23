@@ -15,7 +15,8 @@
 namespace Taco\Data;
 
 
-use RuntimeException;
+use RuntimeException,
+	LogicExeption;
 
 
 /**
