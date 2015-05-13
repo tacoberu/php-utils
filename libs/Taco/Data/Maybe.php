@@ -30,7 +30,17 @@ use RuntimeException,
  */
 interface Maybe
 {
+
+	/**
+	 * if this is Just, then call callback, otherwise return nothing.
+	 * @return Maybe
+	 */
 	function ifJust($callback);
+
+	/**
+	 * for Just return value, for nothing return NULL.
+	 */
+	function getValue();
 }
 
 
@@ -40,6 +50,7 @@ class Just implements Maybe
 
 	private $value;
 
+
 	/**
 	 * @param mixin
 	 */
@@ -47,6 +58,7 @@ class Just implements Maybe
 	{
 		$this->value = $value;
 	}
+
 
 
 	/**
@@ -59,13 +71,16 @@ class Just implements Maybe
 
 
 
+	/**
+	 * @return Maybe
+	 */
 	function ifJust($callback)
 	{
 		$val = $callback($this->getValue());
 		if ($val instanceof Maybe) {
 			return $val;
 		}
-		throw new LogicExeption("ifJust callback must returning Maybe type.");
+		throw new LogicExeption("ifJust callback must return Maybe.");
 	}
 
 
@@ -87,9 +102,21 @@ class Nothing implements Maybe
 {
 
 
+	/**
+	 * @return Maybe
+	 */
 	function ifJust($_)
 	{
 		return $this;
+	}
+
+
+	/**
+	 * @return Null
+	 */
+	function getValue()
+	{
+		return Null;
 	}
 
 
@@ -101,4 +128,17 @@ class Nothing implements Maybe
 		}
 	}
 
+}
+
+
+class MaybeUtils
+{
+
+	static function ifTrue($expr)
+	{
+		if ($expr) {
+			return new Just($expr);
+		}
+		return new Nothing();
+	}
 }
