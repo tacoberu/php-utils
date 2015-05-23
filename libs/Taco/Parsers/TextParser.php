@@ -25,8 +25,19 @@ class TextParser
 {
 
 
+	private static $BRACKET_MAP = array(
+			'(' => ')',
+			'[' => ']',
+			'{' => '}',
+			);
+
+
+
 	/**
 	 * Vyhledá konec řetězce. Bere v potaz escapování.
+	 * Předpokládá se, že řetězec je otevřený, tedy, že na indexu -1 byla
+	 * uvozovka poznačená v $char
+	 *
 	 * @param string
 	 * @param char
 	 * @return int
@@ -39,6 +50,32 @@ class TextParser
 				return $index;
 			}
 			$index++;
+		}
+		return False;
+	}
+
+
+
+	/**
+	 * Vyhledá konec výrazu ukončený závorkou. Počítá otevírací závorky.
+	 * Předpokládá se, že výraz je otevřený, tedy, že na indexu -1 byla otevírací závorka.
+	 *
+	 * @param string
+	 * @param char
+	 * @return int
+	 */
+	function lookupEndBracketIndex($source, $bracket = ')')
+	{
+		$index = 0;
+		while ($xs = Utils\Strings::match($source, '~[\(\)\{\}\[\]]~is', PREG_OFFSET_CAPTURE, $index)) {
+			if ($xs[0][0] == $bracket) {
+				return $xs[0][1] + 1;
+			}
+			$index = $xs[0][1];
+			if (($shift = $this->lookupEndBracketIndex(substr($source, $index + 1), self::$BRACKET_MAP[$xs[0][0]])) === False) {
+				return False;
+			}
+			$index += $shift + 1;
 		}
 		return False;
 	}

@@ -39,40 +39,75 @@ class TextParserTest extends PHPUnit_Framework_TestCase
 		$this->parser = new TextParser();
 	}
 
+/*
 
-
-	function testLookupEndIndexEmpty()
+	function testLookupEndQuoteIndexEmpty()
 	{
 		$this->assertFalse($this->parser->lookupEndIndex('', '"'));
 	}
 
 
 
-	function testLookupEndIndexShort()
+	function testLookupEndQuoteIndexShort()
 	{
 		$this->assertEquals(0, $this->parser->lookupEndIndex('"', '"'));
 	}
 
 
 
-	function testLookupEndIndexWithoutEnd()
+	function testLookupEndQuoteIndexWithoutEnd()
 	{
 		$this->assertFalse($this->parser->lookupEndIndex('abc def', '"'));
 	}
 
 
 
-	function testLookupEndIndexSample()
+	function testLookupEndQuoteIndexSample()
 	{
 		$this->assertEquals(7, $this->parser->lookupEndIndex('abc def"', '"'));
 	}
 
 
 
-	function testLookupEndWithEscaped()
+	function testLookupEndQuoteWithEscapedQuote()
 	{
 		$source = "a bc def 123 'pi' \\\"sss \"da next tex";
 		$this->assertEquals(24, $this->parser->lookupEndIndex($source, '"'));
 	}
+
+
+	function testLookupEndBracketIndexEmpty()
+	{
+		$this->assertFalse($this->parser->lookupEndBracketIndex(''));
+	}
+
+
+
+	function testLookupEndBracketIndexShort()
+	{
+		$this->assertEquals(0, $this->parser->lookupEndBracketIndex(')'));
+	}
+
+
+
+	function testLookupEndBracketIndexWithoutEnd()
+	{
+		$this->assertFalse($this->parser->lookupEndBracketIndex('abc def', '"'));
+	}
+
+
+
+	function testLookupEndBracketIndexSample()
+	{
+		$this->assertEquals(7, $this->parser->lookupEndBracketIndex('abc def)'));
+	}
+*/
+
+	function testLookupEndBracketIndexA()
+	{
+		$this->assertEquals(15, $this->parser->lookupEndBracketIndex('abc (defx) ddd) vvv'));
+		$this->assertEquals(19, $this->parser->lookupEndBracketIndex('abc (defx) (bb)ddd) vvv'));
+	}
+
 
 }
