@@ -46,6 +46,15 @@ class Test2Entry // extends Nette\Object
 	{
 		return $this->title;
 	}
+
+	/**
+	 * @meta(label="Name with prefix")
+	 * @required
+	 */
+	function getTitleWithPrefix()
+	{
+		return '##' . $this->title;
+	}
 }
 
 
@@ -109,13 +118,18 @@ class ReflectionMetaParserTest extends PHPUnit_Framework_TestCase
 
 
 
-
 	function testEntry2Value()
 	{
 		$entry = new Test2Entry();
 		$res = $this->parser->parse($entry);
-
-		$this->assertCount(2, $res);
+		$this->assertCount(3, $res);
+		$state = (object) array(
+				'name' => 'titlewithprefix',
+				'label' => 'Name with prefix',
+				'type' => 'text',
+				'required' => True,
+				);
+		$this->assertState($state, $res['titlewithprefix']);
 		$state = (object) array(
 				'name' => 'title',
 				'label' => 'Název',

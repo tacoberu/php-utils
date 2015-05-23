@@ -22,7 +22,7 @@ use RuntimeException,
 
 
 /**
- * Získání definice formuláře reflexí nějaké entity.
+ * Získání definice prvků reflexí nějakého doménového objektu.
  */
 class ReflectionMetaParser
 {
@@ -45,11 +45,11 @@ class ReflectionMetaParser
 
 
 	/**
-	 * Formulář pro nový záznam.
+	 * Proleze třídu, a vytáhne z toho informace o jednoltivých prvcích formuláře.
 	 *
-	 * @param array | object Pro který se vytvářejí controls.
+	 * @param string | object Pro který se vytvářejí controls.
 	 *
-	 * @return array
+	 * @return array of stdClass
 	 */
 	function parse($entry)
 	{
