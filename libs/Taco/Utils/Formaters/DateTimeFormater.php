@@ -63,6 +63,7 @@ class DateTimeFormater implements Formater
 	/**
 	 * Render cell
 	 * @param mixed $record record
+	 * @return string
 	 */
 	function format($val)
 	{

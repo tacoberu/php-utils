@@ -17,7 +17,7 @@ namespace Taco\Utils\Formaters;
 
 
 /**
- * ?
+ * Konfigurovatelné formátování hodnoty.
  */
 interface Formater
 {
