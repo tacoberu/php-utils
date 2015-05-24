@@ -73,13 +73,21 @@ class ReflectionMetaParser
 
 
 	/**
-	 * Proleze třídu, a vytáhne z toho informace o jednoltivých prvcích formuláře.
+	 * Proleze třídu, a vytáhne z toho informace o jednoltivých prvcích
+	 * třídy. Prvky jsou poněkud netriviálně seřazeny podle toho, jak jsou
+	 * umístěny jejich definice ve třídě. Přičemž je přihlédnuto hlavně k
+	 * umístění properites. Neníli se čeho chytit, zařadí se podle abecedy.
 	 *
 	 * @return array of stdClass
 	 */
 	private function parseControls($reflection)
 	{
-		$controls = array();
+		// Vytvoříme tabulku umístění
+		$controls = array_flip(array_map(function($m) {
+			return $m->getName();
+		}, $reflection->getProperties()));
+
+		$prev = Null;
 
 		// Getters
 		foreach (get_class_methods($reflection->name) as $name) {
@@ -106,7 +114,23 @@ class ReflectionMetaParser
 				$label = isset($meta['label']) ? $meta['label'] : ucfirst($k);
 				$type = isset($meta['type']) ? $meta['type'] : $reflection->getMethod($name)->getAnnotation('return');
 
+				// Virtuální getter.
+				if (! array_key_exists($k, $controls)) {
+					if (empty($prev)) {
+						$prev = self::lookupPrevKeyFor(array_keys($controls), $k);
+					}
+					if (empty($prev)) {
+						Utils\Arrays::insertBefore($controls, $prev, array($k => 1));
+					}
+					else {
+						Utils\Arrays::insertAfter($controls, $prev, array($k => 1));
+					}
+				}
+
 				$controls[$k] = self::buildControl($k, $label, $type, $required);
+
+				// Respektovat řadu getterů.
+				$prev = $k;
 			}
 		}
 		// Public fields
@@ -134,6 +158,11 @@ class ReflectionMetaParser
 			$controls[$name] = self::buildControl($name, $label, $type, $required);
 		}
 
+		// Odstranit fantomy.
+		$controls = array_filter($controls, function($m) {
+			return is_object($m);
+		});
+
 		return $controls;
 	}
 
@@ -142,10 +171,17 @@ class ReflectionMetaParser
 	/**
 	 * Helper pro vytvoření balíčku informací o controlu.
 	 *
+	 * @param string $name Jméno atributu
+	 * @param string $label Lidský popisek atributu.
+	 * @param string $type Typ hodnoty, číslo, text, boolean.
+	 * @param bool $required Zda je nutné hodnotu vyplnit - šikovné pro formuláře.
+	 *
 	 * @return stdClass
 	 */
 	private static function buildControl($name, $label, $type = Null, $required = False)
 	{
+		Utils\Validators::assert($name, 'string:1..');
+		Utils\Validators::assert($label, 'string:1..');
 		return (object) array(
 				'name' => $name,
 				'label' => $label,
@@ -154,5 +190,26 @@ class ReflectionMetaParser
 				);
 	}
 
+
+
+	/**
+	 * Vyhledá, za který klíč v tabulce se má vložit.
+	 *
+	 * @param array Tabulka možností.
+	 * @param string zařazovaný klíč.
+	 * @return string Najde a vrátí klíč, za který se má přiřadit. V krajním případě na konec.
+	 */
+	private static function lookupPrevKeyFor($table, $key)
+	{
+		Utils\Validators::assert($table, 'list');
+		Utils\Validators::assert($key, 'string:1..');
+		$table[] = $key;
+		sort($table);
+		$indexes = array_flip($table);
+		if (! $index = $indexes[$key]) {
+			return Null;
+		}
+		return $table[$index-1];
+	}
 
 }

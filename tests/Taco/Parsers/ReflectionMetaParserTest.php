@@ -58,6 +58,24 @@ class Test2Entry // extends Nette\Object
 }
 
 
+class Test3Entry
+{
+	public $title;
+	/** @meta(label="Obsah") */
+	public $content;
+
+	private $dirty;
+	/**
+	 * @meta(label="Name with prefix")
+	 * @required
+	 */
+	function getTitleWithPrefix()
+	{
+		return '##' . $this->title;
+	}
+}
+
+
 /**
  * @call phpunit --bootstrap ../../../../../bootstrap.php ReflectionTest.php
  */
@@ -145,6 +163,20 @@ class ReflectionMetaParserTest extends PHPUnit_Framework_TestCase
 				'required' => False,
 				);
 		$this->assertState($state, $res['content']);
+	}
+
+
+
+	function testOrdered()
+	{
+		$res = $this->parser->parse('Taco\Parsers\TestEntry');
+		$this->assertEquals('title,content', implode(',', array_keys($res)));
+
+		$res = $this->parser->parse('Taco\Parsers\Test2Entry');
+		$this->assertEquals('title,titleWithPrefix,content', implode(',', array_keys($res)));
+
+		$res = $this->parser->parse('Taco\Parsers\Test3Entry');
+		$this->assertEquals('title,titleWithPrefix,content', implode(',', array_keys($res)));
 	}
 
 
