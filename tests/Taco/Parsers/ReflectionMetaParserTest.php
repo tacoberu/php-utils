@@ -73,6 +73,7 @@ class ReflectionMetaParserTest extends PHPUnit_Framework_TestCase
 	}
 
 
+
 	function testEntryValue()
 	{
 		$entry = new TestEntry();
@@ -124,12 +125,12 @@ class ReflectionMetaParserTest extends PHPUnit_Framework_TestCase
 		$res = $this->parser->parse($entry);
 		$this->assertCount(3, $res);
 		$state = (object) array(
-				'name' => 'titlewithprefix',
+				'name' => 'titleWithPrefix',
 				'label' => 'Name with prefix',
 				'type' => 'text',
 				'required' => True,
 				);
-		$this->assertState($state, $res['titlewithprefix']);
+		$this->assertState($state, $res['titleWithPrefix']);
 		$state = (object) array(
 				'name' => 'title',
 				'label' => 'Název',

@@ -84,7 +84,7 @@ class ReflectionMetaParser
 		// Getters
 		foreach (get_class_methods($reflection->name) as $name) {
 			if (! in_array($name, $this->excludeMethods) && Utils\Strings::startsWith($name, 'get')) {
-				$k = strtolower(substr($name, 3));
+				$k = lcfirst(substr($name, 3));
 
 				$getter = $reflection->getMethod($name);
 				$required = $getter->getAnnotation('required');
