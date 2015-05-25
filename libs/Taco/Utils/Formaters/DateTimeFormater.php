@@ -34,12 +34,17 @@ class DateTimeFormater implements Formater
 	public $emptyFormat = '-';
 
 
-	function __construct($format = Null, $emptyFormat = '-')
+	/** @var bool */
+	public $monospace = False;
+
+
+	function __construct($format = Null, $emptyFormat = '-', $monospace = False)
 	{
 		if ($format) {
 			$this->format = $format;
 		}
 		$this->emptyFormat = $emptyFormat;
+		$this->monospace = $monospace;
 	}
 
 
@@ -55,6 +60,9 @@ class DateTimeFormater implements Formater
 		}
 		if (count($opts) > 1) {
 			$this->emptyFormat = (string)$opts[1];
+		}
+		if (count($opts) > 2) {
+			$this->monospace = (boolean)$opts[2];
 		}
 	}
 
@@ -72,6 +80,17 @@ class DateTimeFormater implements Formater
 		}
 
 		if ($val) {
+			if ($this->monospace) {
+				$format = strtr($this->format, array(
+						'G' => '##G##',
+						'g' => '##g##',
+						'j' => '##j##',
+						'n' => '##n##',
+						));
+				return preg_replace_callback('~##(\d{1,2})##~', function($x) {
+					return ($x[1] > 9) ? $x[1] : " $x[1]";
+				}, $val->format($format));
+			}
 			return $val->format($this->format);
 		}
 		else {

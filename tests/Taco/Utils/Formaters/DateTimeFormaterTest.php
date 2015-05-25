@@ -93,4 +93,16 @@ class DateTimeFormaterTest extends PHPUnit_Framework_TestCase
 
 
 
+	function testSetFormatPreserveSpace()
+	{
+		$f = new DateTimeFormater();
+		$f->setOptions(array('j.n.Y, G:i', '-', True));
+		$d = DateTime::createFromFormat('Y-m-d H:i:s', '1999-06-01 4:57:21');
+		$this->assertEquals(' 1. 6.1999,  4:57', $f->format($d));
+		$f->setOptions(array('G:i, j.n.Y'));
+		$this->assertEquals(' 4:57,  1. 6.1999', $f->format($d));
+	}
+
+
+
 }
