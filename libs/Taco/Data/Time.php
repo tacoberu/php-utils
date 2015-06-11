@@ -78,25 +78,25 @@ class Time
 	function format($format)
 	{
 		return strtr($format, array(
-				// Lowercase Ante meridiem and Post meridiem 	am or pm
+				// Lowercase Ante meridiem and Post meridiem    am or pm
 				'a' => $this->hours < 12 ? 'am' : 'pm',
-				// Uppercase Ante meridiem and Post meridiem 	AM or PM
+				// Uppercase Ante meridiem and Post meridiem    AM or PM
 				'A' => $this->hours < 12 ? 'AM' : 'PM',
-				// Swatch Internet time 	000 through 999
+				// Swatch Internet time 000 through 999
 				//~ 'B' =>
-				// 12-hour format of an hour without leading zeros 	1 through 12
+				// 12-hour format of an hour without leading zeros  1 through 12
 				'g' => $this->hours < 13 ? $this->hours : ($this->hours - 12),
-				// 24-hour format of an hour without leading zeros 	0 through 23
+				// 24-hour format of an hour without leading zeros  0 through 23
 				'G' => $this->hours,
-				// 12-hour format of an hour with leading zeros 	01 through 12
+				// 12-hour format of an hour with leading zeros     01 through 12
 				'h' => $this->hours < 10 ? '0' . $this->hours : $this->hours,
-				// 24-hour format of an hour with leading zeros 	00 through 23
+				// 24-hour format of an hour with leading zeros     00 through 23
 				'H' => $this->hours < 10 ? '0' . $this->hours : $this->hours,
-				// Minutes with leading zeros 	00 to 59
+				// Minutes with leading zeros   00 to 59
 				'i' => $this->minutes < 10 ? '0' . $this->minutes : $this->minutes,
-				// Seconds, with leading zeros 	00 through 59
+				// Seconds, with leading zeros  00 through 59
 				's' => $this->seconds < 10 ? '0' . $this->seconds : $this->seconds,
-				// Microseconds (added in PHP 5.2.2). Note that date() will always generate 000000 since it takes an integer parameter, whereas DateTime::format() does support microseconds. 	}
+				// Microseconds (added in PHP 5.2.2). Note that date() will always generate 000000 since it takes an integer parameter, whereas DateTime::format() does support microseconds.}
 				//~ 'u' =>
 				));
 	}
