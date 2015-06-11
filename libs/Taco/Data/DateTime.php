@@ -15,7 +15,12 @@
 namespace Taco\Data;
 
 
-
+/**
+ * Representation Date and Time or only Date (time ignore).
+ *
+ * @author Martin Takáč
+ * @credits David Grudl
+ */
 class DateTime extends \DateTime
 {
 
@@ -47,7 +52,7 @@ class DateTime extends \DateTime
 	 * @param  string|int|\DateTime
 	 * @return DateTime
 	 */
-	public static function from($time)
+	static function from($time)
 	{
 		if ($time instanceof \DateTime || $time instanceof \DateTimeInterface) {
 			return new static($time->format('Y-m-d H:i:s'), $time->getTimezone());
