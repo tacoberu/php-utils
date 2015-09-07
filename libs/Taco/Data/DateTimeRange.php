@@ -15,7 +15,6 @@
 namespace Taco\Data;
 
 
-use DateTime;
 
 
 /**
@@ -30,7 +29,7 @@ class DateTimeRange
 	private $from, $to;
 
 
-	function __construct(DateTime $from, DateTime $to)
+	function __construct(\DateTime $from, \DateTime $to)
 	{
 		$this->from = $from;
 		$this->to = $to;

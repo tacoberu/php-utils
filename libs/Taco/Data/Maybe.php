@@ -16,7 +16,7 @@ namespace Taco\Data;
 
 
 use RuntimeException,
-	LogicExeption;
+	LogicException;
 
 
 /**
@@ -80,7 +80,7 @@ class Just implements Maybe
 		if ($val instanceof Maybe) {
 			return $val;
 		}
-		throw new LogicExeption("ifJust callback must return Maybe.");
+		throw new LogicException("ifJust callback must return Maybe.");
 	}
 
 
