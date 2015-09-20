@@ -114,13 +114,14 @@ class LazyIterator implements Iterator, Countable
 
 
 	/**
-	 * nahraje data, nejsou-li nahrána.
+	 * Lazy fetches data from callback.
 	 */
 	private function fetch()
 	{
 		if (Null === $this->values) {
 			$fce = $this->callback;
-			$this->values = $fce();
+			// defragment key of sequence
+			$this->values = array_values($fce());
 		}
 		return $this->values;
 	}
