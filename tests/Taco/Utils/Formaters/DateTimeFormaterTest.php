@@ -105,4 +105,10 @@ class DateTimeFormaterTest extends PHPUnit_Framework_TestCase
 
 
 
+	function testTryParse()
+	{
+		$f = new DateTimeFormater();
+		$this->assertEquals('1999-06-30 14:57:21', $f->format('1999-06-30 14:57:21'));
+	}
+
 }

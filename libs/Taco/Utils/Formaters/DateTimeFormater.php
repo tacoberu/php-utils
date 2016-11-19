@@ -75,7 +75,8 @@ class DateTimeFormater implements Formater
 	 */
 	function format($val)
 	{
-		if (! empty($val) && ! $val instanceof DateTime) {
+		$val = self::tryParse($val);
+		if ( ! empty($val) && ! $val instanceof DateTime) {
 			throw new InvalidArgumentException("Argument must be type of DateTime.");
 		}
 
@@ -98,5 +99,22 @@ class DateTimeFormater implements Formater
 		}
 	}
 
+
+
+	/**
+	 * @return DateTime | Null
+	 */
+	private static function tryParse($val)
+	{
+		if (empty($val) || $val instanceof DateTime) {
+			return $val;
+		}
+		try {
+			return new DateTime($val);
+		}
+		catch (\Exception $e) {
+			return $val;
+		}
+	}
 
 }
