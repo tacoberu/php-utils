@@ -29,7 +29,7 @@ class Tokenizer
 	private $tags;
 
 
-	function __construct($tags = [['(', ')']])
+	function __construct($tags = array(array('(', ')')))
 	{
 		$this->tags = $tags;
 	}
@@ -50,7 +50,7 @@ class Tokenizer
 	 * @TODO Není to úplně přesný. Pro řetězec ~abc def"veta"pok xyz~ to na urovni uvozovek zalomí.
 	 */
 	static function parse($src) {
-		$res = [];
+		$res = array();
 		// Najdeme první uvozovku. Kod do ní zpracujeme.
 		while ($quote = TextParser::indexOfText($src)) {
 			$head = substr($src, 0, $quote[1]);
@@ -77,7 +77,7 @@ class Tokenizer
 
 	private function buildTree2($src, $offset, $open = null, $close = null)
 	{
-		$res = [];
+		$res = array();
 		while ($src) {
 			$tag = $this->findTag($src, $offset);
 			$quote = TextParser::indexOfText($src, $offset);
@@ -115,17 +115,17 @@ class Tokenizer
 							$tail = false;
 						}
 
-						return [new Token($open, $res, $close), $tail];
+						return array(new Token($open, $res, $close), $tail);
 
 					// Žádný další tag
 					case ($tag === False):
 						$res[] = $src;
-						return [new Token($open, $res, $close), false];
+						return array(new Token($open, $res, $close), false);
 				}
 			}
 		}
 
-		return [new Token($open, $res, $close), false];
+		return array(new Token($open, $res, $close), false);
 	}
 
 
@@ -142,13 +142,13 @@ class Tokenizer
 
 			// tag je nalezen, a buď je to první nalezený, nebo je lepší jak první nalezený.
 			if ($index !== false && ( ! $curr || ($index < $curr[0]))) {
-				$curr = [$index, $open, $close];
+				$curr = array($index, $open, $close);
 			}
 
 			// A co když je uzavírací tag ještě dříve?
 			$index = strpos($src, $close, $offset);
 			if ($index !== false && ( ! $curr || ($index < $curr[0]))) {
-				$curr = [$index, $close];
+				$curr = array($index, $close);
 			}
 		}
 

@@ -115,15 +115,15 @@ class TextParser
 		$a = self::indexOfQuotes(self::QUOTE,      $src, $offset, $escapedstyle);
 		$b = self::indexOfQuotes(self::APOSTROPHE, $src, $offset, $escapedstyle);
 		if ($a >= 0 && $b >= 0) {
-			return $a > $b ? [self::APOSTROPHE, $b] : [self::QUOTE, $a];
+			return $a > $b ? array(self::APOSTROPHE, $b) : array(self::QUOTE, $a);
 		}
 
 		if ($a >= 0) {
-			return [self::QUOTE, $a];
+			return array(self::QUOTE, $a);
 		}
 
 		if ($b >= 0) {
-			return [self::APOSTROPHE, $b];
+			return array(self::APOSTROPHE, $b);
 		}
 
 		return False;
@@ -176,7 +176,7 @@ class TextParser
 		}
 
 		if ($pos !== False) {
-			return [$quote, $pos];
+			return array($quote, $pos);
 		}
 
 		return False;
