@@ -1,43 +1,28 @@
 <?php
 /**
- * This file is part of the Taco Projects.
- *
- * Copyright (c) 2004, 2013 Martin Takáč (http://martin.takac.name)
- *
- * For the full copyright and license information, please view
- * the file LICENCE that was distributed with this source code.
- *
- * PHP version 5.3
- *
- * @author     Martin Takáč (martin@takac.name)
+ * Copyright (c) since 2004 Martin Takáč
+ * @author Martin Takáč <martin@takac.name>
  */
 
 namespace Taco\Utils;
-
 
 use Iterator,
 	Countable;
 
 
-/**
- * Decorate of content.
- */
 class LazyIterator implements Iterator, Countable
 {
 	/** @var array */
 	private $values = Null;
 
-	/** @var int */
-	private $pointer;
-
-	/** @var ??? */
+	/** @var callback */
 	private $callback;
 
 
 	/**
-	 * @param  DibiResult
+	 * @param callback
 	 */
-	public function __construct($callback)
+	function __construct($callback)
 	{
 		$this->callback = $callback;
 	}
@@ -48,9 +33,12 @@ class LazyIterator implements Iterator, Countable
 	 * Rewinds the iterator to the first element.
 	 * @return void
 	 */
-	public function rewind()
+	function rewind()
 	{
-		$this->pointer = 0;
+		if ($this->values === Null) {
+			return;
+		}
+		reset($this->values);
 	}
 
 
@@ -59,9 +47,10 @@ class LazyIterator implements Iterator, Countable
 	 * Returns the key of the current element.
 	 * @return mixed
 	 */
-	public function key()
+	function key()
 	{
-		return $this->pointer;
+		$this->fetch();
+		return key($this->values);
 	}
 
 
@@ -70,10 +59,10 @@ class LazyIterator implements Iterator, Countable
 	 * Returns the current element.
 	 * @return mixed
 	 */
-	public function current()
+	function current()
 	{
 		$this->fetch();
-		return $this->values[$this->pointer];
+		return current($this->values);
 	}
 
 
@@ -82,9 +71,10 @@ class LazyIterator implements Iterator, Countable
 	 * Moves forward to next element.
 	 * @return void
 	 */
-	public function next()
+	function next()
 	{
-		$this->pointer++;
+		$this->fetch();
+		next($this->values);
 	}
 
 
@@ -93,10 +83,9 @@ class LazyIterator implements Iterator, Countable
 	 * Checks if there is a current element after calls to rewind() or next().
 	 * @return bool
 	 */
-	public function valid()
+	function valid()
 	{
-		$this->fetch();
-		return isset($this->values[$this->pointer]);
+		return array_key_exists($this->key(), $this->values);
 	}
 
 
@@ -105,7 +94,7 @@ class LazyIterator implements Iterator, Countable
 	 * Required by the Countable interface.
 	 * @return int
 	 */
-	public function count()
+	function count()
 	{
 		$this->fetch();
 		return count($this->values);
@@ -121,7 +110,8 @@ class LazyIterator implements Iterator, Countable
 		if (Null === $this->values) {
 			$fce = $this->callback;
 			// defragment key of sequence
-			$this->values = array_values($fce());
+			//~ $this->values = array_values($fce());
+			$this->values = $fce();
 		}
 		return $this->values;
 	}
