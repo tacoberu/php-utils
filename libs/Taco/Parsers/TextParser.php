@@ -25,6 +25,38 @@ class TextParser
 
 
 	/**
+	 * Split to code and "te\"xt".
+	 *
+	 * @param string
+	 * @return array of string
+	 */
+	function mark($src)
+	{
+		$res = array();
+		// Najdeme první uvozovku. Kod do ní zpracujeme.
+		while ($quote = self::indexOfText($src)) {
+			$res[] = substr($src, 0, $quote[1]);
+			$src = substr($src, $quote[1]);
+
+			// Najdeme druhou uvozovku.
+			$index = self::indexOfQuotes($quote[0], $src, 1);
+			if ($index < 0) {
+				break;
+			}
+			$res[] = substr($src, 0, $index + 1);
+			$src = substr($src, $index + 1);
+		}
+
+		if ($src) {
+			$res[] = $src;
+		}
+
+		return array_values(array_filter($res));
+	}
+
+
+
+	/**
 	 * @deprecated
 	 *
 	 * Vyhledá konec řetězce. Bere v potaz escapování.

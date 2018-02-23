@@ -180,4 +180,47 @@ class TextParserTest extends PHPUnit_Framework_TestCase
 		];
 	}
 
+
+
+	/**
+	 * @dataProvider dataMark
+	 */
+	function testMark($except, $src)
+	{
+		$this->assertEquals($except, TextParser::mark($src));
+		$this->assertEquals($src, implode(TextParser::mark($src)));
+	}
+
+
+
+	function dataMark()
+	{
+		return [
+			[['abcdefghijklm'],
+				'abcdefghijklm'], // nic
+			[['abcde', '"fghijklm'],
+				'abcde"fghijklm'],
+			[['abcde', '"fg"', 'hijklm'],
+				'abcde"fg"hijklm'],
+			[['abc', '"def"', 'ghi', '"jklm'],
+				'abc"def"ghi"jklm'],
+			[['abc\"def', '"ghi"', 'jklm'],
+				'abc\"def"ghi"jklm'],
+			[['"abcdefghi"', 'jklm'],
+				'"abcdefghi"jklm'], // uplně na začátku
+			[['\"abcdefghi', '"jklm'],
+				'\"abcdefghi"jklm'], // uplně na začátku
+			[['abc\"def', '"ghi"', 'jklm'],
+				'abc\"def"ghi"jklm'],
+			[['abc\\\\', '"def"', 'ghi', '"jklm'],
+				'abc\\\"def"ghi"jklm'],
+			[['\\\\', '"abcdefghi"', 'jklm'],
+				'\\\\"abcdefghi"jklm'], // uplně na začátku
+			[['abc', "'def\"ghi\"jklm"],
+				'abc\'def"ghi"jklm'],
+			[['abc\\\'def', '"ghi"', 'jklm'],
+				'abc\\\'def"ghi"jklm'],
+		];
+	}
+
 }
