@@ -56,6 +56,16 @@ class TextParser
 
 
 
+	static function isText($s)
+	{
+		if ($s{0} === '"' || $s{0} === "'") {
+			return True;
+		}
+		return False;
+	}
+
+
+
 	/**
 	 * @deprecated
 	 *

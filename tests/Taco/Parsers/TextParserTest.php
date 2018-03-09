@@ -223,4 +223,13 @@ class TextParserTest extends PHPUnit_Framework_TestCase
 		];
 	}
 
+
+
+	function testIsText()
+	{
+		$this->assertFalse(TextParser::isText('abc'));
+		$this->assertTrue(TextParser::isText('"abc'));
+		$this->assertTrue(TextParser::isText("'abc"));
+	}
+
 }
