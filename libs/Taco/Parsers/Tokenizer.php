@@ -55,7 +55,7 @@ class Tokenizer
 		// Najdeme první uvozovku. Kod do ní zpracujeme.
 		while ($quote = TextParser::indexOfText($src)) {
 			$head = substr($src, 0, $quote[1]);
-			$res = array_merge($res, self::split(rtrim($head)));
+			$res = array_merge($res, explode(' ', rtrim($head)));
 			$src = substr($src, $quote[1]);
 
 			// Najdeme druhou uvozovku.
@@ -68,7 +68,62 @@ class Tokenizer
 		}
 
 		if ($src) {
-			$res = array_merge($res, self::split($src));
+			$res = array_merge($res, explode(' ', $src));
+		}
+
+		return array_values(array_filter($res));
+	}
+
+
+
+	/**
+	 * Split the $src using $sep. Keeps text content (quotes, apostrophes). Escaping (by /) is supported.
+	 *
+	 * @param string
+	 * @param string
+	 * @return array of string
+	 */
+	static function split($sep, $src)
+	{
+		$res = array();
+		$glue = False;
+		// Najdeme první uvozovku. Kod do ní zpracujeme.
+		while ($quote = TextParser::indexOfText($src)) {
+			$head = substr($src, 0, $quote[1]);
+			$chunks = explode($sep, $head);
+			if ($glue) {
+				$first = array_shift($chunks);
+				$last = array_pop($res);
+				$res[] = $last . $first;
+				$glue = False;
+			}
+			$res = array_merge($res, $chunks);
+			$src = substr($src, $quote[1]);
+
+			// Najdeme druhou uvozovku.
+			$index = TextParser::indexOfQuotes($quote[0], $src, 1);
+			if ($index < 0) {
+				break;
+			}
+
+			// text v uvozovkách přilípnout k poslednímu prvku
+			$last = array_pop($res);
+			$last .= substr($src, 0, $index + 1);
+			$res[] = $last;
+			$glue = True;
+
+			$src = substr($src, $index + 1);
+		}
+
+		// zbytek
+		if ($src) {
+			$chunks = explode($sep, $src);
+			if ($glue) {
+				$first = array_shift($chunks);
+				$last = array_pop($res);
+				$res[] = $last . $first;
+			}
+			$res = array_merge($res, $chunks);
 		}
 
 		return array_values(array_filter($res));
@@ -154,13 +209,6 @@ class Tokenizer
 		}
 
 		return $curr;
-	}
-
-
-
-	private static function split($s)
-	{
-		return explode(' ', $s);
 	}
 
 

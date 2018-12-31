@@ -13,7 +13,38 @@ use Nette\Utils;
 class TokenizerTest extends PHPUnit_Framework_TestCase
 {
 
-	function testParseQuotes() {
+
+	/**
+	 * @dataProvider dataSplitQuotes
+	 */
+	function testSplitQuotes($src, $expected, $sep = ' ')
+	{
+		$this->assertEquals($expected, Tokenizer::split($sep, $src));
+	}
+
+
+
+	function dataSplitQuotes()
+	{
+		return [
+			['abx cdx \"efx \\\'ghx aaa"chx ijk" lm ne "a jak se" máš',
+				['abx', 'cdx', '\"efx', '\\\'ghx', 'aaa"chx ijk"', 'lm', 'ne', '"a jak se"', 'máš']],
+			['abx cdx',
+				['abx', 'cdx']],
+			['abx  cdx',
+				['abx', 'cdx']],
+			['abx / cdx',
+				['abx ', ' cdx'],
+				'/'],
+			['abxcdx',
+				['ab', 'cd'],
+				'x'],
+		];
+	}
+
+
+	function testParseQuotes()
+	{
 		$src = 'abx cdx \"efx \\\'ghx aaa"chx ijk" lm ne "a jak se" máš';
 		$this->assertEquals([
 			'abx', 'cdx', '\"efx', '\\\'ghx', 'aaa', '"chx ijk"', 'lm', 'ne', '"a jak se"', 'máš'
