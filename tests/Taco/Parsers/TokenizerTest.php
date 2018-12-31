@@ -22,7 +22,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function testParseWhiteChars() {
+	function testParseWhiteChars()
+	{
 		$src = 'abx cdx';
 		$this->assertEquals([
 			'abx', 'cdx'
@@ -31,7 +32,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function testParseManyWhiteChars() {
+	function testParseManyWhiteChars()
+	{
 		$src = 'abx  cdx';
 		$this->assertEquals([
 			'abx', 'cdx'
@@ -103,7 +105,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function testTokenize1() {
+	function testTokenize1()
+	{
 		$src = 'abc (ab1 x bc2) def [i jkl] mn';
 		$tokenizer = (new Tokenizer([['(', ')'], ['[', ']']]));
 		$this->assertEquals([
@@ -118,7 +121,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function testTokenize2() {
+	function testTokenize2()
+	{
 		$src = 'abx (ab1 bc2) def (a58) kjl';
 		$this->assertEquals([
 			'abx ',
@@ -132,7 +136,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function testTokenize3_fail() {
+	function testTokenize3_fail()
+	{
 		$src = 'abx {if}ab1 bc2{/} def (a58) kjl';
 		$tokenizer = new Tokenizer([
 			['{if}', '{/}'],
@@ -151,7 +156,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function testTokenize4() {
+	function testTokenize4()
+	{
 		$src = 'abx {if}ab1 "ahoj {if}" bc2{/} def (a58) kjl';
 		$tokenizer = new Tokenizer([
 			['{if}', '{/}'],
@@ -169,7 +175,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 
 
 
-	function _testTokenize5() {
+	function _testTokenize5()
+	{
 		// Nefunguje dobře.
 		$src = 'abx {if}ab1 "ahoj {if}"{if}a{/} bc2{/} def (a58) kjl';
 		$tokenizer = new Tokenizer([
@@ -193,7 +200,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 	/**
 	 * rozdělit i whitechars?
 	 */
-	function testTokenize6() {
+	function testTokenize6()
+	{
 		$src = 'a != 5 AND (b == c OR d > 5) AND id IN (1, 2, 65)';
 		$tokenizer = new Tokenizer([
 			['(', ')'],
@@ -212,7 +220,8 @@ class TokenizerTest extends PHPUnit_Framework_TestCase
 	/**
 	 * Ignoruje to parsování prvních závorek.
 	 */
-	function testTokenizeCode() {
+	function testTokenizeCode()
+	{
 		$src = '
 fn foo(a, b)
 {
@@ -254,7 +263,8 @@ fn boo(a, b)
 
 
 
-	function testTokenize8() {
+	function testTokenize8()
+	{
 		$src = 'abx {if a=1}ab1 bc2{/} def';
 		$tokenizer = new Tokenizer([
 			['{if', '{/}'],
@@ -267,7 +277,8 @@ fn boo(a, b)
 
 
 
-	function testTokenize9() {
+	function testTokenize9()
+	{
 		$src = 'abc(a + b)';
 		$tokenizer = new Tokenizer();
 		$this->assertEquals([
@@ -279,7 +290,8 @@ fn boo(a, b)
 
 
 
-	function testTokenize10() {
+	function testTokenize10()
+	{
 		$src = 'abc(a + b(xb))';
 		$tokenizer = new Tokenizer();
 		$this->assertEquals([
@@ -293,13 +305,12 @@ fn boo(a, b)
 
 
 
-	function ___testTokenizeTagAsToken() {
-
+	function ___testTokenizeTagAsToken()
+	{
 		new Tokenizer([
 			Tokenizer::simple('(', ')'),
 			Tokenizer::tagAsToken('{if', '}', '{/}'),
 		]);
-
 
 		$src = 'abx {if a=1}ab1 bc2{/} def';
 		$tokenizer = new Tokenizer([
@@ -314,7 +325,8 @@ fn boo(a, b)
 
 
 
-	function ___testTokenizeManyEnd() {
+	function ___testTokenizeManyEnd()
+	{
 		$src = 'abx {if a=1}ab1 bc2{/if} def';
 		$tokenizer = new Tokenizer([
 			['{if', '}', ['{/}', '{/if}']],
@@ -328,7 +340,8 @@ fn boo(a, b)
 
 
 
-	function __testTokenizeWithBeforeEndDelimiter() {
+	function __testTokenizeWithBeforeEndDelimiter()
+	{
 		//~ $tokenizer = new Utils\Tokenizer(array(
 			//~ T_DNUMBER => '\d+',
 			//~ T_WHITESPACE => '\s+',

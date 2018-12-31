@@ -153,7 +153,8 @@ class TextParser
 	 * Nejbližší neescapovaná uvozovka nebo apostrof.
 	 * @return [", abs-pos] | [', abs-pos] | False
 	 */
-	static function indexOfText($src, $offset = 0, $escapedstyle = self::ESCAPE_STYLE_BACKSLASH) {
+	static function indexOfText($src, $offset = 0, $escapedstyle = self::ESCAPE_STYLE_BACKSLASH)
+	{
 		$a = self::indexOfQuotes(self::QUOTE,      $src, $offset, $escapedstyle);
 		$b = self::indexOfQuotes(self::APOSTROPHE, $src, $offset, $escapedstyle);
 		if ($a >= 0 && $b >= 0) {

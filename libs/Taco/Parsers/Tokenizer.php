@@ -49,7 +49,8 @@ class Tokenizer
 	 *
 	 * @TODO Není to úplně přesný. Pro řetězec ~abc def"veta"pok xyz~ to na urovni uvozovek zalomí.
 	 */
-	static function parse($src) {
+	static function parse($src)
+	{
 		$res = array();
 		// Najdeme první uvozovku. Kod do ní zpracujeme.
 		while ($quote = TextParser::indexOfText($src)) {
