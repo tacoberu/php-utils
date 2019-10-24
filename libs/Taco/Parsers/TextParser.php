@@ -30,7 +30,7 @@ class TextParser
 	 * @param string
 	 * @return array of string
 	 */
-	function mark($src)
+	static function mark($src)
 	{
 		$res = array();
 		// Najdeme první uvozovku. Kod do ní zpracujeme.

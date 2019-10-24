@@ -148,6 +148,11 @@ class Tokenizer
 			}
 			else {
 				switch (True) {
+					// Žádný další tag
+					case ($tag === False):
+						$res[] = $src;
+						return array(new Token($open, $res, $close), false);
+
 					// Zanoření
 					case (count($tag) === 3):
 						if ($tag[0]) {
@@ -170,13 +175,7 @@ class Tokenizer
 						if (empty($tail)) {
 							$tail = false;
 						}
-
 						return array(new Token($open, $res, $close), $tail);
-
-					// Žádný další tag
-					case ($tag === False):
-						$res[] = $src;
-						return array(new Token($open, $res, $close), false);
 				}
 			}
 		}
