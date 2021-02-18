@@ -139,7 +139,7 @@ class Tokenizer
 			$quote = TextParser::indexOfText($src, $offset);
 
 			// text má přednost
-			if ($quote && $quote[1] < $tag[0]) {
+			if ($tag && $quote && $quote[1] < $tag[0]) {
 				$index = TextParser::indexOfQuotes($quote[0], $src, $quote[1] + 1);
 				if ($index < 0) {
 					break;

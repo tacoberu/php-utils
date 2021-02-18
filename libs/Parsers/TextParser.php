@@ -56,7 +56,7 @@ class TextParser
 
 	static function isText($s)
 	{
-		if ($s{0} === '"' || $s{0} === "'") {
+		if ($s[0] === '"' || $s[0] === "'") {
 			return True;
 		}
 		return False;
@@ -122,7 +122,7 @@ class TextParser
 	{
 		// @HACK - předpokládáme, že escapování je řešeno pomocí jednoho znaku. Což třeba v přípaě SQL delimiteru neplatí.
 		// Ale dá se prohlásit, že v případě SQL delimiterů prostě neescapujeme.
-		$escapedofescaped = $escaped{0};
+		$escapedofescaped = $escaped[0];
 		$pos = strpos($s, $quote,   $offset);
 		$esc = strpos($s, $escaped, $offset);
 
