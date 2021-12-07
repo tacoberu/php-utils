@@ -336,6 +336,7 @@ fn boo(a, b)
 
 
 
+	/*
 	function ___testTokenizeTagAsToken()
 	{
 		new Tokenizer([
@@ -353,9 +354,11 @@ fn boo(a, b)
 			' def'
 		], $tokenizer->tokenize($src));
 	}
+	*/
 
 
 
+	/*
 	function ___testTokenizeManyEnd()
 	{
 		$src = 'abx {if a=1}ab1 bc2{/if} def';
@@ -368,39 +371,8 @@ fn boo(a, b)
 			' def'
 		], $tokenizer->tokenize($src));
 	}
+	*/
 
-
-
-	function __testTokenizeWithBeforeEndDelimiter()
-	{
-		//~ $tokenizer = new Utils\Tokenizer(array(
-			//~ T_DNUMBER => '\d+',
-			//~ T_WHITESPACE => '\s+',
-			//~ T_STRING => '\w+',
-		//~ ));
-
-		//~ $src = 'abx (ab1 bc2) def (a58) kjl';
-		//~ dump($src);
-		//~ dump($tokenizer->tokenize("say \n123"));
-
-		// Tak zrovna tady máme token, který končí začátek následujícího.
-		$input = "
-			@author David 'Grudl
-			@package Nette
-		";
-		$tokenizer = new Tokenizer([
-			['@', Tokenizer::beforeEnd(['@', '*/'])], // token končí některými z těchto tokenů. Ale neslouží jako uzavýrací, nejsou součástí tokenu.
-		]);
-		$this->assertEquals([
-			"\n\t\t\t",
-			new Token('@', ["author David 'Grudl\n\t\t\t"], null),
-			new Token('@', ["package Nette\n\t\t\t"], null),
-		], $tokenizer->tokenize($src));
-
-		$parser = new Parser();
-		$annotations = $parser->parse($input);
-		dump($annotations);
-	}
 
 }
 
@@ -426,56 +398,4 @@ class Package
 	{
 		$this->name = $name;
 	}
-}
-
-
-
-class Parser
-{
-	const T_AT = 1;
-	const T_WHITESPACE = 2;
-	const T_STRING = 3;
-
-	/** @var \Nette\Utils\Tokenizer */
-	private $tokenizer;
-
-	/** @var \Nette\Utils\TokenIterator */
-	private $iterator;
-
-	public function __construct()
-	{
-		$this->tokenizer = new Utils\Tokenizer(array(
-			self::T_AT => '@',
-			self::T_WHITESPACE => '\\s+',
-			self::T_STRING => '\\w+',
-		));
-	}
-
-
-
-	public function parse($input)
-	{
-		$this->iterator = new Utils\TokenIterator($this->tokenizer->tokenize($input));
-
-		$result = array();
-		while ($this->iterator->nextToken()) {
-			if ($this->iterator->isCurrent(self::T_AT)) {
-				$result[] = $this->parseAnnotation();
-			}
-		}
-
-		return $result;
-	}
-
-
-
-	protected function parseAnnotation()
-	{
-		$name = __namespace__ . '\\' . ucfirst($this->iterator->joinUntil(self::T_WHITESPACE));
-		$this->iterator->nextUntil(self::T_STRING);
-		$content = $this->iterator->joinUntil(self::T_AT);
-
-		return new $name(trim($content));
-	}
-
 }
