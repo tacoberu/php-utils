@@ -42,9 +42,6 @@ class Just implements Maybe
 	private $value;
 
 
-	/**
-	 * @param mixin
-	 */
 	function __construct($value)
 	{
 		$this->value = $value;
@@ -52,9 +49,6 @@ class Just implements Maybe
 
 
 
-	/**
-	 * @return mixin
-	 */
 	function getValue()
 	{
 		return $this->value;

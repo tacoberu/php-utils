@@ -28,6 +28,11 @@ class MoneyFormater implements Formater
 	public $monospace = False;
 
 
+	/**
+	 * @param ?string $format
+	 * @param ?string $emptyFormat
+	 * @param bool $monospace
+	 */
 	function __construct($format = Null, $emptyFormat = '-', $monospace = False)
 	{
 		if ($format) {
@@ -39,10 +44,6 @@ class MoneyFormater implements Formater
 
 
 
-	/**
-	 * Konfigurace formáteru.
-	 * @param array
-	 */
 	function setOptions(array $opts)
 	{
 		if (count($opts) > 0) {
@@ -58,11 +59,6 @@ class MoneyFormater implements Formater
 
 
 
-	/**
-	 * Render cell
-	 * @param mixed $record record
-	 * @return string
-	 */
 	function format($val)
 	{
 		if (! empty($val) && ! $val instanceof DateTime) {

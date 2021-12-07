@@ -25,7 +25,7 @@ class TextParser
 	/**
 	 * Split to code and "te\"xt".
 	 *
-	 * @param string
+	 * @param string $src
 	 * @return array of string
 	 */
 	static function mark($src)
@@ -91,7 +91,7 @@ class TextParser
 
 	/**
 	 * Nejbližší neescapovaná uvozovka nebo apostrof.
-	 * @return [", abs-pos] | [', abs-pos] | False
+	 * @return array | False Like [", abs-pos] | [', abs-pos] | False
 	 */
 	static function indexOfText($src, $offset = 0, $escapedstyle = self::ESCAPE_STYLE_BACKSLASH)
 	{
@@ -116,7 +116,7 @@ class TextParser
 
 	/**
 	 * Hledáme uvozovku (určenou prvním argumentem). Způsob escapování určujeme explicitně.
-	 * @return [", abs-pos] | [', abs-pos] | False
+	 * @return array|false Like [", abs-pos] | [', abs-pos] | False
 	 */
 	private static function findQuotes($quote, $escaped, $s, $offset = 0)
 	{

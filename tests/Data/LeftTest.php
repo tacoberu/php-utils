@@ -4,28 +4,21 @@
  * @author Martin Takáč <martin@takac.name>
  */
 
-
 namespace Taco\Data;
-
-require_once __dir__ . '/../../libs/Data/Either.php';
-require_once __dir__ . '/../../libs/Data/Left.php';
-
 
 use PHPUnit_Framework_TestCase;
 
 
-/**
- * @call phpunit --bootstrap ../../../../bootstrap.php LeftTest.php
- */
 class LeftTest extends PHPUnit_Framework_TestCase
 {
 
 
 	function testEmptyValue()
 	{
-		$m = new Left(Null);
+		$m = new Left(Null);// @phpstan-ignore-line
 		$this->assertEqualsState(Null, 0, $m);
 	}
+
 
 
 	function testNumValue()
@@ -35,11 +28,13 @@ class LeftTest extends PHPUnit_Framework_TestCase
 	}
 
 
+
 	function testNumValueWithCode()
 	{
 		$m = new Left("ahoj", 4);
 		$this->assertEqualsState("ahoj", 4, $m);
 	}
+
 
 
 	function testMakeFromException()
@@ -49,9 +44,10 @@ class LeftTest extends PHPUnit_Framework_TestCase
 	}
 
 
+
 	function testTypeContract()
 	{
-		$m = new Left(Null);
+		$m = new Left(Null);// @phpstan-ignore-line
 		$this->assertInstanceOf('Taco\Data\Left', $m);
 		$this->assertInstanceOf('Taco\Data\Either', $m);
 	}

@@ -14,12 +14,12 @@ class ClosureFormater implements Formater
 {
 
 
-	/** @var closure */
+	/** @var callable */
 	private $formater;
 
 
 	/**
-	 * Constructor injection.
+	 * @param callable $closure
 	 */
 	function __construct($closure)
 	{
@@ -30,7 +30,6 @@ class ClosureFormater implements Formater
 
 	/**
 	 * Konfigurace formáteru.
-	 * @param array
 	 */
 	function setOptions(array $opts)
 	{}
@@ -39,13 +38,12 @@ class ClosureFormater implements Formater
 
 	/**
 	 * Render cell
-	 * @param mixed $value
 	 * @return string
 	 */
 	function format($val)
 	{
-		$closure = $this->formater;
-		return $closure($val);
+		$cb = $this->formater;
+		return $cb($val);
 	}
 
 

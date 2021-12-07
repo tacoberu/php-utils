@@ -14,13 +14,14 @@ interface Formater
 {
 
 	/**
-	 * Konfigurace formáteru.
-	 * @param array
+	 * @param array<mixed> $opts
+	 * @return void
 	 */
 	function setOptions(array $opts);
 
 
 	/**
+	 * @param mixed $val
 	 * @return string
 	 */
 	function format($val);

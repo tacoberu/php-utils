@@ -44,7 +44,7 @@ class DateTime extends \DateTime
 
 	/**
 	 * DateTime object factory.
-	 * @param  string|int|\DateTime
+	 * @param string|int|\DateTime|\DateTimeInterface $time
 	 * @return DateTime
 	 */
 	static function from($time)

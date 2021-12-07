@@ -12,24 +12,25 @@ use Iterator,
 
 
 /**
- * Decorate of content.
+ * @template T
+ * @implements Iterator<T>
  */
 class LazyIterator implements Iterator, Countable
 {
-	/** @var array */
+	/** @var array<T>|null */
 	private $values = Null;
 
 	/** @var int */
 	private $pointer;
 
-	/** @var ??? */
+	/** @var callable */
 	private $callback;
 
 
 	/**
-	 * @param  DibiResult
+	 * @param callable $callback
 	 */
-	public function __construct($callback)
+	function __construct($callback)
 	{
 		$this->callback = $callback;
 	}
@@ -40,7 +41,7 @@ class LazyIterator implements Iterator, Countable
 	 * Rewinds the iterator to the first element.
 	 * @return void
 	 */
-	public function rewind()
+	function rewind()
 	{
 		$this->pointer = 0;
 	}
@@ -49,9 +50,9 @@ class LazyIterator implements Iterator, Countable
 
 	/**
 	 * Returns the key of the current element.
-	 * @return mixed
+	 * @return int
 	 */
-	public function key()
+	function key()
 	{
 		return $this->pointer;
 	}
@@ -60,9 +61,9 @@ class LazyIterator implements Iterator, Countable
 
 	/**
 	 * Returns the current element.
-	 * @return mixed
+	 * @return T
 	 */
-	public function current()
+	function current()
 	{
 		$this->fetch();
 		return $this->values[$this->pointer];
@@ -74,7 +75,7 @@ class LazyIterator implements Iterator, Countable
 	 * Moves forward to next element.
 	 * @return void
 	 */
-	public function next()
+	function next()
 	{
 		$this->pointer++;
 	}
@@ -85,7 +86,7 @@ class LazyIterator implements Iterator, Countable
 	 * Checks if there is a current element after calls to rewind() or next().
 	 * @return bool
 	 */
-	public function valid()
+	function valid()
 	{
 		$this->fetch();
 		return isset($this->values[$this->pointer]);
@@ -97,7 +98,7 @@ class LazyIterator implements Iterator, Countable
 	 * Required by the Countable interface.
 	 * @return int
 	 */
-	public function count()
+	function count()
 	{
 		$this->fetch();
 		return count($this->values);
@@ -107,6 +108,7 @@ class LazyIterator implements Iterator, Countable
 
 	/**
 	 * Lazy fetches data from callback.
+	 * @return array<T>
 	 */
 	private function fetch()
 	{

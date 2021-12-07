@@ -28,6 +28,11 @@ class DateTimeFormater implements Formater
 	public $monospace = False;
 
 
+	/**
+	 * @param ?string $format
+	 * @param ?string $emptyFormat
+	 * @param ?bool $monospace
+	 */
 	function __construct($format = Null, $emptyFormat = '-', $monospace = False)
 	{
 		if ($format) {
@@ -39,10 +44,6 @@ class DateTimeFormater implements Formater
 
 
 
-	/**
-	 * Konfigurace formáteru.
-	 * @param array
-	 */
 	function setOptions(array $opts)
 	{
 		if (count($opts) > 0) {
@@ -58,18 +59,9 @@ class DateTimeFormater implements Formater
 
 
 
-	/**
-	 * Render cell
-	 * @param mixed $record record
-	 * @return string
-	 */
 	function format($val)
 	{
 		$val = self::tryParse($val);
-		if ( ! empty($val) && ! $val instanceof DateTime) {
-			throw new InvalidArgumentException("Argument must be type of DateTime.");
-		}
-
 		if ($val) {
 			if ($this->monospace) {
 				$format = strtr($this->format, array(
@@ -92,7 +84,8 @@ class DateTimeFormater implements Formater
 
 
 	/**
-	 * @return DateTime | Null
+	 * @param mixed $val
+	 * @return ?DateTime
 	 */
 	private static function tryParse($val)
 	{
@@ -103,7 +96,7 @@ class DateTimeFormater implements Formater
 			return new DateTime($val);
 		}
 		catch (\Exception $e) {
-			return $val;
+			throw new InvalidArgumentException("Argument must be type of DateTime.");
 		}
 	}
 

@@ -11,7 +11,8 @@ class ArrayUtils
 {
 
 	/**
-	 * @return array of array of T
+	 * @param array<mixed> $xs
+	 * @return array<array<mixed>>
 	 */
 	static function cartesianProduct(array $xs)
 	{
