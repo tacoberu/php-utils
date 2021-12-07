@@ -15,7 +15,6 @@ interface Formater
 
 	/**
 	 * Konfigurace formáteru.
-	 * @param array
 	 */
 	function setOptions(array $opts);
 

@@ -16,7 +16,6 @@ class NullFormater implements Formater
 
 	/**
 	 * Konfigurace formáteru.
-	 * @param array
 	 */
 	function setOptions(array $opts)
 	{}
@@ -24,7 +23,6 @@ class NullFormater implements Formater
 
 	/**
 	 * Render cell
-	 * @param mixed $value
 	 * @return string
 	 */
 	function format($val)

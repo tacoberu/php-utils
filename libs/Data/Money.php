@@ -31,8 +31,8 @@ class Money
 
 
 	/**
-	 * @param string CZK, EUR, USD
-	 * @param float|int|numeric
+	 * @param string $currency CZK, EUR, USD
+	 * @param float|int|numeric $value
 	 */
 	function __construct($currency, $value)
 	{

@@ -16,19 +16,15 @@ use Iterator,
  */
 class LazyIterator implements Iterator, Countable
 {
-	/** @var array */
+	/** @var array|null */
 	private $values = Null;
 
 	/** @var int */
 	private $pointer;
 
-	/** @var ??? */
 	private $callback;
 
 
-	/**
-	 * @param  DibiResult
-	 */
 	public function __construct($callback)
 	{
 		$this->callback = $callback;

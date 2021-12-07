@@ -31,9 +31,9 @@ class Time
 
 
 	/**
-	 * @param int $hour
-	 * @param int $minuts
-	 * @param int $seconds
+	 * @param int|string|null $hours
+	 * @param int|string|null $minutes
+	 * @param int|string|null $seconds
 	 */
 	function __construct($hours = Null, $minutes = Null, $seconds = Null)
 	{
@@ -46,6 +46,10 @@ class Time
 		if ($seconds === Null) {
 			$seconds = date('s');
 		}
+		$hours = (int)$hours;
+		$minutes = (int)$minutes;
+		$seconds = (int)$seconds;
+
 		if ($hours < 0 || $hours > 23) {
 			throw new InvalidArgumentException("Hours `$hours' is invalid in range 0 - 23.");
 		}
@@ -55,9 +59,9 @@ class Time
 		if ($seconds < 0 || $seconds > 59) {
 			throw new InvalidArgumentException("Seconds `$seconds' is invalid in range 0 - 59.");
 		}
-		$this->hours = (int)$hours;
-		$this->minutes = (int)$minutes;
-		$this->seconds = (int)$seconds;
+		$this->hours = $hours;
+		$this->minutes = $minutes;
+		$this->seconds = $seconds;
 	}
 
 

@@ -16,16 +16,6 @@ use Nette;
 class TextParserTest extends PHPUnit_Framework_TestCase
 {
 
-	private $parser;
-
-
-	function setUp()
-	{
-		$this->parser = new TextParser();
-	}
-
-
-
 	/**
 	 * @dataProvider dataFindQuotesBackslash
 	 */

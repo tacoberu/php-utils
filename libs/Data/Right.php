@@ -7,6 +7,7 @@
 namespace Taco\Data;
 
 use RuntimeException;
+use LogicException;
 
 
 /**
@@ -25,32 +26,30 @@ class Right implements Either
 
 	private $value;
 
-	/**
-	 * @param mixin
-	 */
-	public function __construct($value)
+
+	function __construct($value)
 	{
 		$this->value = $value;
 	}
 
 
 
-	/**
-	 * @return mixin
-	 */
-	public function getValue()
+	function getValue()
 	{
 		return $this->value;
 	}
 
 
 
-	public static function assert(Either $either)
+	static function assert(Either $val)
 	{
-		if ($either instanceof Right) {
-			return $either->getValue();
+		if ($val instanceof Right) {
+			return $val->getValue();
 		}
-		throw new RuntimeException($either->getMessage(), $either->getCode());
+		if ($val instanceof Left) {
+			throw new RuntimeException($val->getMessage(), $val->getCode());
+		}
+		throw new LogicException("Unsuported instance of Either.");
 	}
 
 }

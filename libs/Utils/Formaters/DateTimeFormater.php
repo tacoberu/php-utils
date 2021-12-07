@@ -41,7 +41,6 @@ class DateTimeFormater implements Formater
 
 	/**
 	 * Konfigurace formáteru.
-	 * @param array
 	 */
 	function setOptions(array $opts)
 	{
@@ -60,13 +59,12 @@ class DateTimeFormater implements Formater
 
 	/**
 	 * Render cell
-	 * @param mixed $record record
 	 * @return string
 	 */
 	function format($val)
 	{
 		$val = self::tryParse($val);
-		if ( ! empty($val) && ! $val instanceof DateTime) {
+		if ($val && ! $val instanceof DateTime) {
 			throw new InvalidArgumentException("Argument must be type of DateTime.");
 		}
 
@@ -91,9 +89,6 @@ class DateTimeFormater implements Formater
 
 
 
-	/**
-	 * @return DateTime | Null
-	 */
 	private static function tryParse($val)
 	{
 		if (empty($val) || $val instanceof DateTime) {

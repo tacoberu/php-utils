@@ -79,8 +79,8 @@ class Tokenizer
 	/**
 	 * Split the $src using $sep. Keeps text content (quotes, apostrophes). Escaping (by /) is supported.
 	 *
-	 * @param string
-	 * @param string
+	 * @param string $sep
+	 * @param string $src
 	 * @return array of string
 	 */
 	static function split($sep, $src)
@@ -187,7 +187,7 @@ class Tokenizer
 
 	/**
 	 * Nejbližší tag. Otevírací či zavírací.
-	 * @return [abs-pos, open, close] |  [abs-pos, close] | false
+	 * @return array | False Like [abs-pos, open, close] |  [abs-pos, close] | false
 	 */
 	private function findTag($src, $offset) {
 		$curr = false;
@@ -213,9 +213,9 @@ class Tokenizer
 
 
 	/**
-	 * @param string
-	 * @param int
-	 * @param string
+	 * @param string $src
+	 * @param int $pos
+	 * @param string $tag
 	 * PHP Parse error:  syntax error, unexpected ')' in /home/dell/Projects/php-utils.github/tests/Taco/Parsers/TokenizerTest.php on line 58
 	 */
 	private static function assertOpenTag($src, $pos, $tag)
@@ -229,9 +229,9 @@ class Tokenizer
 
 
 	/**
-	 * @param string
-	 * @param int
-	 * @param string
+	 * @param string $src
+	 * @param int $pos
+	 * @param string $tag
 	 */
 	private static function assertCloseTag($src, $pos, $tag)
 	{

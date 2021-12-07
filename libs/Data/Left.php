@@ -28,10 +28,10 @@ class Left implements Either
 
 
 	/**
-	 * @param int
-	 * @param string
+	 * @param string $msg
+	 * @param int $code
 	 */
-	public function __construct($msg, $code = 0)
+	function __construct($msg, $code = 0)
 	{
 		$this->msg = $msg;
 		$this->code = $code;
@@ -42,7 +42,7 @@ class Left implements Either
 	/**
 	 * Make instance of Left from Exception;
 	 */
-	public static function fromException(\Exception $e)
+	static function fromException(\Exception $e)
 	{
 		return new self($e->getMessage(), $e->getCode());
 	}
@@ -52,7 +52,7 @@ class Left implements Either
 	/**
 	 * @return string
 	 */
-	public function getMessage()
+	function getMessage()
 	{
 		return $this->msg;
 	}
@@ -62,7 +62,7 @@ class Left implements Either
 	/**
 	 * @return int
 	 */
-	public function getCode()
+	function getCode()
 	{
 		return $this->code;
 	}

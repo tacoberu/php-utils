@@ -41,7 +41,6 @@ class MoneyFormater implements Formater
 
 	/**
 	 * Konfigurace formáteru.
-	 * @param array
 	 */
 	function setOptions(array $opts)
 	{
@@ -60,7 +59,6 @@ class MoneyFormater implements Formater
 
 	/**
 	 * Render cell
-	 * @param mixed $record record
 	 * @return string
 	 */
 	function format($val)
