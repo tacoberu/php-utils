@@ -6,15 +6,14 @@
 
 namespace Taco\Data;
 
-use Nette,
-	Nette\Utils\Validators;
+use InvalidArgumentException;
 
 
 /**
  * Reprezentace částky, která ssebou nese i informace o měně.
  * @credits SchoolPartner
  */
-class Money extends Nette\Object
+class Money
 {
 
 	/**
@@ -37,9 +36,16 @@ class Money extends Nette\Object
 	 */
 	function __construct($currency, $value)
 	{
+		if (!is_string($currency)) {
+			throw new InvalidArgumentException("Argument currency must be string, like CZK, EUR, USD.");
+		}
+		if (strlen($currency) !== 3) {
+			throw new InvalidArgumentException("Argument currency must be 3chars len string, like CZK, EUR, USD.");
+		}
+		if (!self::isNumeric($value)) {
+			throw new InvalidArgumentException("Argument value must be numeric, like `4`, `4.1`, `-4.5`.");
+		}
 		$currency = strtoupper($currency);
-		Validators::assert($currency, 'string:3');
-		Validators::assert($value, 'numeric');
 		$this->currency = $currency;
 		$this->value = (float)$value;
 	}
@@ -54,12 +60,11 @@ class Money extends Nette\Object
 	}
 
 
-	/**
-	 * @return float
-	 */
 	function setValue($m)
 	{
-		Validators::assert($m, 'numeric');
+		if (!self::isNumeric($m)) {
+			throw new InvalidArgumentException("Argument value must be numeric, like `4`, `4.1`, `-4.5`.");
+		}
 		$this->value = (float) $m;
 		return $this;
 	}
@@ -71,6 +76,18 @@ class Money extends Nette\Object
 	function getValue()
 	{
 		return $this->value;
+	}
+
+
+
+	/**
+	 * Finds whether a string is a floating point number in decimal base.
+	 * @credits David Grudl (https://davidgrudl.com)
+	 * @return bool
+	 */
+	private static function isNumeric($value)
+	{
+		return is_float($value) || is_int($value) || is_string($value) && preg_match('#^-?[0-9]*[.]?[0-9]+\z#', $value);
 	}
 
 }
