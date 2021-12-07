@@ -16,6 +16,9 @@ namespace Taco\Data;
 class DateTime extends \DateTime
 {
 
+	/** average year in seconds */
+	const YEAR = 31557600;
+
 
 	/**
 	 * Factory throwed exception when error.
@@ -47,19 +50,19 @@ class DateTime extends \DateTime
 	static function from($time)
 	{
 		if ($time instanceof \DateTime || $time instanceof \DateTimeInterface) {
-			return new static($time->format('Y-m-d H:i:s'), $time->getTimezone());
+			return new self($time->format('Y-m-d H:i:s'), $time->getTimezone());
 		}
 		elseif (is_numeric($time)) {
 			if ($time <= self::YEAR) {
 				$time += time();
 			}
-			$tmp = new static('@' . $time);
+			$tmp = new self('@' . $time);
 			$tmp->setTimeZone(new \DateTimeZone(date_default_timezone_get()));
 			return $tmp;
 		}
 		// textual or NULL
 		else {
-			return new static($time);
+			return new self($time);
 		}
 	}
 
