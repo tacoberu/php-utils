@@ -6,16 +6,11 @@
 
 namespace Taco\Data;
 
-require_once __dir__ . '/../../libs/Data/Maybe.php';
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 
-use PHPUnit_Framework_TestCase;
-
-
-/**
- * @call phpunit --bootstrap ../../../../../bootstrap.php MaybeTest.php
- */
-class MaybeTest extends PHPUnit_Framework_TestCase
+class MaybeTest extends TestCase
 {
 
 
@@ -36,8 +31,8 @@ class MaybeTest extends PHPUnit_Framework_TestCase
 	function testTypeContract()
 	{
 		$m = new Just(Null);
-		$this->assertInstanceOf('Taco\Data\Just', $m);
-		$this->assertInstanceOf('Taco\Data\Maybe', $m);
+		$this->assertInstanceOf(Just::class, $m);
+		$this->assertInstanceOf(Maybe::class, $m);
 	}
 
 
@@ -49,7 +44,8 @@ class MaybeTest extends PHPUnit_Framework_TestCase
 
 	function testUnpackJustFail()
 	{
-		$this->setExpectedException('RuntimeException', 'Maybe return Nothing.');
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage('Maybe return Nothing.');
 		Just::assert(new Nothing());
 	}
 
@@ -62,7 +58,8 @@ class MaybeTest extends PHPUnit_Framework_TestCase
 
 	function testUnpackNothingFail()
 	{
-		$this->setExpectedException('RuntimeException', 'Maybe return Just.');
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage('Maybe return Just.');
 		Nothing::assert(new Just(42));
 	}
 

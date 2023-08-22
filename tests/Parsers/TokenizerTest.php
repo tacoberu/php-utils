@@ -6,11 +6,11 @@
 
 namespace Taco\Parsers;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Nette\Utils;
 
 
-class TokenizerTest extends PHPUnit_Framework_TestCase
+class TokenizerTest extends TestCase
 {
 
 

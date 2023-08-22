@@ -6,14 +6,11 @@
 
 namespace Taco\Parsers;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Nette;
 
 
-/**
- * @call phpunit TextParserTest.php
- */
-class TextParserTest extends PHPUnit_Framework_TestCase
+class TextParserTest extends TestCase
 {
 
 	/**

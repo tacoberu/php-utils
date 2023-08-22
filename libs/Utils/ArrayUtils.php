@@ -14,7 +14,7 @@ class ArrayUtils
 	 * @param array<mixed> $xs
 	 * @return array<array<mixed>>
 	 */
-	static function cartesianProduct(array $xs)
+	static function cartesianProduct(array $xs) : array
 	{
 		$ret = array();
 		for ($i = 0; $i < count($xs); $i++) {

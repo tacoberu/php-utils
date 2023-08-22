@@ -4,20 +4,14 @@
  * @author Martin Takáč <martin@takac.name>
  */
 
-
 namespace Taco\Utils\Formaters;
 
-require_once __dir__ . '/../../../libs/Utils/Formaters/DateTimeFormater.php';
-
-
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DateTime;
+use InvalidArgumentException;
 
 
-/**
- * @call phpunit DateTimeFormaterTest.php
- */
-class DateTimeFormaterTest extends PHPUnit_Framework_TestCase
+class DateTimeFormaterTest extends TestCase
 {
 
 
@@ -76,7 +70,8 @@ class DateTimeFormaterTest extends PHPUnit_Framework_TestCase
 
 	function testInvalidFormat()
 	{
-		$this->setExpectedException('InvalidArgumentException', "Argument must be type of DateTime.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Argument must be type of DateTime.");
 
 		$f = new DateTimeFormater();
 		$f->format(123);

@@ -22,9 +22,8 @@ class DateTime extends \DateTime
 
 	/**
 	 * Factory throwed exception when error.
-	 * @return DateTime
 	 */
-	static function createFromFormat($format, $string, $timezone = Null)
+	static function createFromFormat(string $format, string $string, ?\DateTimeZone $timezone = Null): DateTime|false
 	{
 		$r = parent::createFromFormat($format, $string);
 		$state = DateTime::getLastErrors();

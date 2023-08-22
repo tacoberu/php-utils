@@ -6,17 +6,11 @@
 
 namespace Taco\Data;
 
-require_once __dir__ . '/../../libs/Data/Either.php';
-require_once __dir__ . '/../../libs/Data/Right.php';
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 
-use PHPUnit_Framework_TestCase;
-
-
-/**
- * @call phpunit --bootstrap ../../../../../bootstrap.php RightTest.php
- */
-class RightTest extends PHPUnit_Framework_TestCase
+class RightTest extends TestCase
 {
 
 
@@ -37,8 +31,8 @@ class RightTest extends PHPUnit_Framework_TestCase
 	function testTypeContract()
 	{
 		$m = new Right(Null);
-		$this->assertInstanceOf('Taco\Data\Right', $m);
-		$this->assertInstanceOf('Taco\Data\Either', $m);
+		$this->assertInstanceOf(Right::class, $m);
+		$this->assertInstanceOf(Either::class, $m);
 	}
 
 
@@ -51,7 +45,7 @@ class RightTest extends PHPUnit_Framework_TestCase
 
 	function testUnpackFail()
 	{
-		$this->setExpectedException('RuntimeException', "foo", 42);
+		$this->expectException(RuntimeException::class);
 		$m = new Left('foo', 42);
 		$this->assertEquals(42, Right::assert($m));
 	}

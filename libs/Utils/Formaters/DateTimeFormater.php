@@ -44,7 +44,7 @@ class DateTimeFormater implements Formater
 
 
 
-	function setOptions(array $opts)
+	function setOptions(array $opts) : void
 	{
 		if (count($opts) > 0) {
 			$this->format = (string)$opts[0];
@@ -59,7 +59,7 @@ class DateTimeFormater implements Formater
 
 
 
-	function format($val)
+	function format($val) : string
 	{
 		$val = self::tryParse($val);
 		if ($val) {

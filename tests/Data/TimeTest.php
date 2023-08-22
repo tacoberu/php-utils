@@ -6,18 +6,12 @@
 
 namespace Taco\Data;
 
-require_once __dir__ . '/../../vendor/autoload.php';
-require_once __dir__ . '/../../libs/Data/Time.php';
-
-
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DateTime as PhpDateTime;
+use InvalidArgumentException;
 
 
-/**
- * @call phpunit --bootstrap ../../../../../bootstrap.php TimeTest.php
- */
-class TimeTest extends PHPUnit_Framework_TestCase
+class TimeTest extends TestCase
 {
 
 
@@ -29,11 +23,13 @@ class TimeTest extends PHPUnit_Framework_TestCase
 	}
 
 
+
 	function testDefaultNull()
 	{
 		$t = new Time(0, 0, 12);
 		$this->assertEquals('00:00:12', $t->format('H:i:s'));
 	}
+
 
 
 	function testCreate()
@@ -46,6 +42,7 @@ class TimeTest extends PHPUnit_Framework_TestCase
 	}
 
 
+
 	function testParse()
 	{
 		$t = Time::createFromFormat('H:i:s', '09:12:07');
@@ -56,7 +53,8 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
 	function testInvalidParseHours()
 	{
-		$this->setExpectedException('InvalidArgumentException', "Hours `25' is invalid in range 0 - 23.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Hours `25' is invalid in range 0 - 23.");
 		new Time(25, 70, 90);
 	}
 
@@ -64,7 +62,8 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
 	function testInvalidParseMinutes()
 	{
-		$this->setExpectedException('InvalidArgumentException', "Minutes `70' is invalid in range 0 - 59.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Minutes `70' is invalid in range 0 - 59.");
 		new Time(5, 70, 0);
 	}
 
@@ -72,28 +71,35 @@ class TimeTest extends PHPUnit_Framework_TestCase
 
 	function testInvalidParseSeconds()
 	{
-		$this->setExpectedException('InvalidArgumentException', "Seconds `90' is invalid in range 0 - 59.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Seconds `90' is invalid in range 0 - 59.");
 		new Time(2, 0, 90);
 	}
 
 
+
 	function testInvalidParse()
 	{
-		$this->setExpectedException('InvalidArgumentException', "A four digit year could not be found; Data missing: `aabbcc'.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("A four digit year could not be found; Data missing: `aabbcc'.");
 		Time::createFromFormat('Y-m-d', 'aabbcc');
 	}
 
 
+
 	function testInvalidFormat2()
 	{
-		$this->setExpectedException('InvalidArgumentException', "The separation symbol could not be found; Unexpected data found.; Trailing data: `2011x02x02'.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("The separation symbol could not be found; Unexpected data found.; Trailing data: `2011x02x02'.");
 		Time::createFromFormat('H-i-s', '2011x02x02');
 	}
 
 
+
 	function testInvalidFormat3()
 	{
-		$this->setExpectedException('InvalidArgumentException', "The parsed time was invalid: `99:04:31'.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("The parsed time was invalid: `99:04:31'.");
 		Time::createFromFormat('H:i:s', '99:04:31');
 	}
 

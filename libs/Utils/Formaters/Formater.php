@@ -15,16 +15,14 @@ interface Formater
 
 	/**
 	 * @param array<mixed> $opts
-	 * @return void
 	 */
-	function setOptions(array $opts);
+	function setOptions(array $opts) : void;
 
 
 	/**
 	 * @param mixed $val
-	 * @return string
 	 */
-	function format($val);
+	function format($val) : string;
 
 
 }

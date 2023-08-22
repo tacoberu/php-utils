@@ -31,16 +31,15 @@ class ClosureFormater implements Formater
 	/**
 	 * Konfigurace formáteru.
 	 */
-	function setOptions(array $opts)
+	function setOptions(array $opts) : void
 	{}
 
 
 
 	/**
 	 * Render cell
-	 * @return string
 	 */
-	function format($val)
+	function format($val): string
 	{
 		$cb = $this->formater;
 		return $cb($val);

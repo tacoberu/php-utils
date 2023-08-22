@@ -213,12 +213,9 @@ class Tokenizer
 
 
 	/**
-	 * @param string $src
-	 * @param int $pos
-	 * @param string $tag
 	 * PHP Parse error:  syntax error, unexpected ')' in /home/dell/Projects/php-utils.github/tests/Taco/Parsers/TokenizerTest.php on line 58
 	 */
-	private static function assertOpenTag($src, $pos, $tag)
+	private static function assertOpenTag(string $src, int $pos, string $tag)
 	{
 		if (substr($src, $pos, strlen($tag)) !== $tag) {
 			$fragment = substr($src, -80);
@@ -228,12 +225,7 @@ class Tokenizer
 
 
 
-	/**
-	 * @param string $src
-	 * @param int $pos
-	 * @param string $tag
-	 */
-	private static function assertCloseTag($src, $pos, $tag)
+	private static function assertCloseTag(string $src, int $pos, string $tag)
 	{
 		if (substr($src, $pos, strlen($tag)) !== $tag) {
 			$fragment = substr($src, -80);
@@ -265,21 +257,21 @@ class Token
 
 
 
-	function getItems()
+	function getItems() : array
 	{
 		return $this->items;
 	}
 
 
 
-	function getOpen()
+	function getOpen() : string
 	{
 		return $this->open;
 	}
 
 
 
-	function getClose()
+	function getClose() : string
 	{
 		return $this->close;
 	}

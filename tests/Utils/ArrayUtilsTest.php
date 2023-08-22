@@ -6,13 +6,10 @@
 
 namespace Taco\Utils;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 
-/**
- * @call phpunit ArrayUtilsTest.php
- */
-class ArrayUtilsTest extends PHPUnit_Framework_TestCase
+class ArrayUtilsTest extends TestCase
 {
 
 	function testCartesianProductEmpty()

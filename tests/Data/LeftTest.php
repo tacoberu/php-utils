@@ -6,10 +6,10 @@
 
 namespace Taco\Data;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 
-class LeftTest extends PHPUnit_Framework_TestCase
+class LeftTest extends TestCase
 {
 
 

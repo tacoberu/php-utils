@@ -6,17 +6,12 @@
 
 namespace Taco\Data;
 
-require_once __dir__ . '/../../libs/Data/DateTime.php';
-
-
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DateTime as PhpDateTime;
+use InvalidArgumentException;
 
 
-/**
- * @call phpunit --bootstrap ../../../../bootstrap.php ValueTest.php
- */
-class DateTimeTest extends PHPUnit_Framework_TestCase
+class DateTimeTest extends TestCase
 {
 
 
@@ -29,21 +24,24 @@ class DateTimeTest extends PHPUnit_Framework_TestCase
 
 	function testInvalidFormat1()
 	{
-		$this->setExpectedException('InvalidArgumentException', "A four digit year could not be found; Data missing: `aabbcc'.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("A four digit year could not be found; Data missing: `aabbcc'.");
 		DateTime::createFromFormat('Y-m-d', 'aabbcc');
 	}
 
 
 	function testInvalidFormat2()
 	{
-		$this->setExpectedException('InvalidArgumentException', "Unexpected data found: `2011x02x02'.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("Unexpected data found: `2011x02x02'.");
 		DateTime::createFromFormat('Y-m-d', '2011x02x02');
 	}
 
 
 	function testInvalidFormat3()
 	{
-		$this->setExpectedException('InvalidArgumentException', "The parsed date was invalid: `1999-04-31'.");
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage("The parsed date was invalid: `1999-04-31'.");
 
 		DateTime::createFromFormat('Y-m-d', '1999-04-31');
 	}

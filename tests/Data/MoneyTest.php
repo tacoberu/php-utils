@@ -6,11 +6,11 @@
 
 namespace Taco\Data;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use DateTime as PhpDateTime;
 
 
-class MoneyTest extends PHPUnit_Framework_TestCase
+class MoneyTest extends TestCase
 {
 
 
